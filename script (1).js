@@ -53,6 +53,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===== AUTOMATIC GALLERY SLIDER =====
     initGallerySlider();
 
+    // ===== 3D TILT EFFECT FOR PORTRAIT =====
+    init3DTilt();
+
+    // ===== TYPEWRITER EFFECT =====
+    initTypewriter();
+
+    // ===== ROTATING ROLES =====
+    initRotatingRoles();
+
     console.log('✨ Isha Ostwal - Speaker Website Loaded');
 });
 
@@ -152,3 +161,156 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// ===== 3D TILT EFFECT FUNCTION =====
+function init3DTilt() {
+    const container = document.getElementById('portrait-tilt');
+    if (!container) return;
+
+    const frame = container.querySelector('.portrait-frame');
+    const shine = container.querySelector('.portrait-shine');
+    const badges = container.querySelectorAll('.floating-badge');
+
+    const maxTilt = 15; // Maximum tilt angle in degrees
+    const maxMove = 15; // Maximum badge movement in pixels
+
+    container.addEventListener('mousemove', (e) => {
+        const rect = container.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        // Calculate mouse position relative to center (-1 to 1)
+        const mouseX = (e.clientX - centerX) / (rect.width / 2);
+        const mouseY = (e.clientY - centerY) / (rect.height / 2);
+
+        // Calculate tilt angles
+        const tiltX = -mouseY * maxTilt; // Inverted for natural feel
+        const tiltY = mouseX * maxTilt;
+
+        // Apply 3D transform to frame
+        frame.style.transform = `
+            rotateX(${tiltX}deg) 
+            rotateY(${tiltY}deg) 
+            translateZ(10px)
+        `;
+
+        // Move shine based on mouse position
+        if (shine) {
+            const shineX = 50 + mouseX * 30;
+            const shineY = 50 + mouseY * 30;
+            shine.style.background = `
+                linear-gradient(
+                    ${135 + mouseX * 20}deg,
+                    transparent 0%,
+                    transparent 35%,
+                    rgba(255, 255, 255, 0.08) 45%,
+                    rgba(255, 255, 255, 0.15) 50%,
+                    rgba(255, 255, 255, 0.08) 55%,
+                    transparent 65%,
+                    transparent 100%
+                )
+            `;
+        }
+
+        // Parallax effect on badges
+        badges.forEach((badge, index) => {
+            const direction = index % 2 === 0 ? 1 : -1;
+            const depth = 0.5 + (index * 0.2);
+            const moveX = mouseX * maxMove * depth * direction;
+            const moveY = mouseY * maxMove * depth;
+            badge.style.transform = `translateY(${-10 + moveY}px) translateX(${moveX}px)`;
+        });
+    });
+
+    container.addEventListener('mouseleave', () => {
+        // Reset transforms smoothly
+        frame.style.transition = 'transform 0.5s ease-out';
+        frame.style.transform = 'rotateX(0) rotateY(0) translateZ(0)';
+
+        badges.forEach(badge => {
+            badge.style.transition = 'transform 0.5s ease-out';
+            badge.style.transform = 'translateY(0) translateX(0)';
+        });
+
+        // Reset transition after animation
+        setTimeout(() => {
+            frame.style.transition = 'transform 0.1s ease-out';
+            badges.forEach(badge => {
+                badge.style.transition = 'transform 0.3s ease';
+            });
+        }, 500);
+    });
+
+    container.addEventListener('mouseenter', () => {
+        frame.style.transition = 'transform 0.1s ease-out';
+    });
+}
+
+// ===== TYPEWRITER EFFECT =====
+function initTypewriter() {
+    const typewriterElement = document.getElementById('typewriter');
+    if (!typewriterElement) return;
+
+    const phrases = [
+        "Helping founders, brands, and institutions scale through systems, GTM strategy, and community-led growth.",
+        "Building growth engines that create opportunities on autopilot.",
+        "Designing networking systems that compound value over time.",
+        "Turning vision into velocity for ambitious leaders."
+    ];
+
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typingSpeed = 50;
+
+    function type() {
+        const currentPhrase = phrases[phraseIndex];
+
+        if (isDeleting) {
+            typewriterElement.textContent = currentPhrase.substring(0, charIndex - 1);
+            charIndex--;
+            typingSpeed = 30;
+        } else {
+            typewriterElement.textContent = currentPhrase.substring(0, charIndex + 1);
+            charIndex++;
+            typingSpeed = 50;
+        }
+
+        if (!isDeleting && charIndex === currentPhrase.length) {
+            // Pause at end of phrase
+            typingSpeed = 2000;
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            typingSpeed = 500;
+        }
+
+        setTimeout(type, typingSpeed);
+    }
+
+    // Start typing after a delay for other animations
+    setTimeout(type, 2000);
+}
+
+// ===== ROTATING ROLES =====
+function initRotatingRoles() {
+    const roles = document.querySelectorAll('.rotating-roles .role');
+    if (roles.length === 0) return;
+
+    let currentIndex = 0;
+
+    function rotateRoles() {
+        // Remove active class from current
+        roles[currentIndex].classList.remove('active');
+
+        // Move to next role
+        currentIndex = (currentIndex + 1) % roles.length;
+
+        // Add active class to new current
+        roles[currentIndex].classList.add('active');
+    }
+
+    // Rotate every 2.5 seconds
+    setInterval(rotateRoles, 2500);
+}
