@@ -12,7 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="/favicon.png" />
 </head>
 
 <body>
@@ -26,30 +25,116 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1 class="hero-headline">
-                        Building Growth, Networks<br>& Communities That Scale.
+                    <!-- Decorative Accent -->
+                    <div class="hero-accent-line"></div>
+
+                    <!-- Animated Headline -->
+                    <h1 class="hero-headline animated-headline">
+                        <span class="headline-word" style="--delay: 0">Building</span>
+                        <span class="headline-word" style="--delay: 1">Growth,</span>
+                        <span class="headline-word" style="--delay: 2">Networks</span>
+                        <br>
+                        <span class="headline-word accent-word" style="--delay: 3">&</span>
+                        <span class="headline-word" style="--delay: 4">Communities</span>
+                        <span class="headline-word" style="--delay: 5">That</span>
+                        <span class="headline-word gradient-text" style="--delay: 6">Scale.</span>
                     </h1>
-                    <div class="hero-identity">
-                        <span class="name">Isha Ostwal</span>
-                        <span class="title">Founder & Growth Consultant</span>
-                        <span class="subtitle">Founder – Bombay Networking Circle</span>
+
+                    <!-- Enhanced Identity Section -->
+                    <div class="hero-identity enhanced-identity">
+                        <div class="name-wrapper">
+                            <span class="name">Isha Ostwal</span>
+                            <span class="name-underline"></span>
+                        </div>
+
+                        <!-- Rotating Roles Badge -->
+                        <div class="roles-container">
+                            <span class="role-label">I am a</span>
+                            <div class="rotating-roles">
+                                <span class="role active">Growth Architect</span>
+                                <span class="role">Community Builder</span>
+                                <span class="role">Keynote Speaker</span>
+                                <span class="role">Startup Mentor</span>
+                                <span class="role">Network Strategist</span>
+                            </div>
+                        </div>
+
+                        <div class="affiliation-tags">
+                            <a href="https://dreamsvin.com" target="_blank" class="affiliation-tag tag-dreamsvin">
+                                <span class="tag-icon">🚀</span>
+                                <span>CEO @ Dreamsvin</span>
+                            </a>
+                            <span class="affiliation-tag tag-bnc">
+                                <span class="tag-icon">🌐</span>
+                                <span>Founder @ BNC</span>
+                            </span>
+                        </div>
                     </div>
-                    <p class="hero-subtext">
-                        Helping founders, brands, and institutions scale through systems, GTM strategy, and
-                        community-led growth.
+
+                    <!-- Typewriter Subtext -->
+                    <p class="hero-subtext typewriter-container">
+                        <span class="typewriter-text" id="typewriter"></span>
+                        <span class="typewriter-cursor">|</span>
                     </p>
-                    <div class="hero-cta">
-                        <a href="https://topmate.io/growwithisha" target="_blank" class="btn btn-primary">Work with
-                            me</a>
-                        <a href="https://forms.gle/jzZxDQYozsqUEjHM8" target="_blank" class="btn btn-secondary">Invite
-                            me to speak</a>
+
+                    <!-- Enhanced CTA Buttons -->
+                    <div class="hero-cta enhanced-cta">
+                        <a href="https://topmate.io/growwithisha" target="_blank" class="btn btn-primary btn-glow">
+                            <span class="btn-text">Work with me</span>
+                            <span class="btn-shine"></span>
+                        </a>
+                        <a href="https://forms.gle/jzZxDQYozsqUEjHM8" target="_blank"
+                            class="btn btn-secondary btn-outline">
+                            <span class="btn-text">Invite me to speak</span>
+                            <span class="btn-arrow">→</span>
+                        </a>
+                    </div>
+
+                    <!-- Social Proof Mini Stats -->
+                    <div class="hero-social-proof">
+                        <div class="proof-item">
+                            <span class="proof-number">40K+</span>
+                            <span class="proof-label">Entrepreneurs Impacted</span>
+                        </div>
+                        <div class="proof-divider"></div>
+                        <div class="proof-item">
+                            <span class="proof-number">80+</span>
+                            <span class="proof-label">Chapters Led</span>
+                        </div>
                     </div>
                 </div>
                 <div class="hero-portrait">
-                    <!-- Replace with actual photo: avatar.jpg -->
-                    <div class="portrait-frame">
-                        <img src="../isha.jpeg" alt="Isha Ostwal" onerror="this.style.display='none'">
-                        <div class="portrait-glow"></div>
+                    <!-- 3D Tilt Container with Floating Badges -->
+                    <div class="portrait-3d-container" id="portrait-tilt">
+                        <div class="portrait-frame">
+                            <img src="../isha.jpeg" alt="Isha Ostwal" onerror="this.style.display='none'">
+                            <div class="portrait-glow"></div>
+                            <div class="portrait-shine"></div>
+                        </div>
+                        <!-- Floating Stats Badges -->
+                        <div class="floating-badge badge-followers">
+                            <span class="badge-icon">👥</span>
+                            <div class="badge-content">
+                                <span class="badge-number">10K+</span>
+                                <span class="badge-label">Followers</span>
+                            </div>
+                        </div>
+                        <div class="floating-badge badge-community">
+                            <span class="badge-icon">🌐</span>
+                            <div class="badge-content">
+                                <span class="badge-number">1K+</span>
+                                <span class="badge-label">Community</span>
+                            </div>
+                        </div>
+                        <div class="floating-badge badge-chapters">
+                            <span class="badge-icon">🚀</span>
+                            <div class="badge-content">
+                                <span class="badge-number">80+</span>
+                                <span class="badge-label">Chapters</span>
+                            </div>
+                        </div>
+                        <!-- Orbiting Ring -->
+                        <div class="orbit-ring"></div>
                     </div>
                 </div>
             </div>
