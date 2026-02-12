@@ -834,13 +834,178 @@ section {
     color: var(--text-secondary);
     margin-bottom: 20px;
     line-height: 1.8;
+    text-align: justify;
 }
 
 .story-text strong {
     color: var(--text-main);
 }
 
-/* ===== 3. IMPACT STRIP ===== */
+
+
+/* ===== JOURNEY TIMELINE ===== */
+.journey {
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.timeline {
+    position: relative;
+    max-width: 1000px;
+    margin: 60px auto 0;
+    padding: 20px 0;
+}
+
+/* Vertical Line */
+.timeline-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: linear-gradient(180deg,
+            rgba(91, 124, 255, 0) 0%,
+            rgba(91, 124, 255, 0.5) 15%,
+            rgba(91, 124, 255, 0.5) 85%,
+            rgba(91, 124, 255, 0) 100%);
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    position: relative;
+    width: 50%;
+    padding: 0 40px;
+    margin-bottom: 60px;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.timeline-item.visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.timeline-item[data-side="left"] {
+    left: 0;
+    text-align: right;
+}
+
+.timeline-item[data-side="right"] {
+    left: 50%;
+    text-align: left;
+}
+
+/* Timeline Dot */
+.timeline-dot {
+    position: absolute;
+    top: 24px;
+    width: 16px;
+    height: 16px;
+    background: var(--bg-dark);
+    border: 2px solid var(--accent-primary);
+    border-radius: 50%;
+    z-index: 2;
+    transition: all 0.4s ease;
+}
+
+.timeline-item[data-side="left"] .timeline-dot {
+    right: -8px;
+}
+
+.timeline-item[data-side="right"] .timeline-dot {
+    left: -8px;
+}
+
+.timeline-item.visible .timeline-dot {
+    background: var(--accent-primary);
+    box-shadow: 0 0 15px rgba(91, 124, 255, 0.6);
+}
+
+/* Timeline Card */
+.timeline-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    padding: 24px;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.timeline-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(91, 124, 255, 0.3);
+    transform: translateY(-5px);
+}
+
+.timeline-item[data-side="left"] .timeline-card {
+    border-right: 3px solid var(--accent-primary);
+}
+
+.timeline-item[data-side="right"] .timeline-card {
+    border-left: 3px solid var(--accent-primary);
+}
+
+.timeline-year {
+    display: inline-block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--accent-secondary);
+    margin-bottom: 8px;
+    padding: 4px 12px;
+    background: rgba(0, 229, 168, 0.1);
+    border-radius: 20px;
+}
+
+.timeline-card-icon {
+    font-size: 2rem;
+    margin-bottom: 12px;
+}
+
+.timeline-card h3 {
+    font-size: 1.25rem;
+    color: var(--text-main);
+    margin-bottom: 8px;
+}
+
+.timeline-card p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .timeline-line {
+        left: 30px;
+    }
+
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 20px;
+    }
+
+    .timeline-item[data-side="left"],
+    .timeline-item[data-side="right"] {
+        left: 0;
+        text-align: left;
+    }
+
+    .timeline-item[data-side="left"] .timeline-dot,
+    .timeline-item[data-side="right"] .timeline-dot {
+        left: 22px;
+        right: auto;
+    }
+
+    .timeline-item[data-side="left"] .timeline-card {
+        border-right: 1px solid rgba(255, 255, 255, 0.08);
+        border-left: 3px solid var(--accent-primary);
+    }
+}
+
 .impact {
     padding: 80px 0;
     background: linear-gradient(90deg, rgba(91, 124, 255, 0.05) 0%, rgba(0, 229, 168, 0.05) 100%);
