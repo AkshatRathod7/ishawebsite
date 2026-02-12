@@ -1,3 +1,4 @@
+
 // Smooth reveal animations on scroll
 document.addEventListener('DOMContentLoaded', () => {
     // Add fade-in class to elements
@@ -62,103 +63,54 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===== ROTATING ROLES =====
     initRotatingRoles();
 
+    // ===== TIMELINE ANIMATION =====
+    initTimeline();
+
     console.log('✨ Isha Ostwal - Speaker Website Loaded');
 });
 
+// Gallery Auto-Slider
 // Gallery Auto-Slider
 function initGallerySlider() {
     const track = document.querySelector('.gallery-track');
     if (!track) return;
 
-    const items = track.querySelectorAll('.gallery-item');
-    if (items.length === 0) return;
+    // Clone items for infinite loop
+    const items = track.innerHTML;
+    track.innerHTML = items + items;
 
-    // Clone items for infinite scroll effect
-    items.forEach(item => {
-        const clone = item.cloneNode(true);
-        track.appendChild(clone);
-    });
+    // Animation logic
+    let scrollPos = 0;
+    const speed = 0.5; // Adjust speed here
 
-    let scrollPosition = 0;
-    const scrollSpeed = 1; // pixels per frame
-    let isPaused = false;
-    let animationId;
-
-    // Get the width of original items (before cloning)
-    const getOriginalWidth = () => {
-        let width = 0;
-        for (let i = 0; i < items.length; i++) {
-            width += items[i].offsetWidth + 20; // 20px gap
+    function animate() {
+        scrollPos -= speed;
+        // Reset when first set is fully scrolled
+        if (scrollPos <= -track.scrollWidth / 2) {
+            scrollPos = 0;
         }
-        return width;
-    };
-
-    const animate = () => {
-        if (!isPaused) {
-            scrollPosition += scrollSpeed;
-
-            // Reset when we've scrolled past original items
-            const originalWidth = getOriginalWidth();
-            if (scrollPosition >= originalWidth) {
-                scrollPosition = 0;
-            }
-
-            track.style.transform = `translateX(-${scrollPosition}px)`;
-        }
-        animationId = requestAnimationFrame(animate);
-    };
-
-    // Start animation
-    animate();
-
-    // Pause on hover
-    const galleryScroll = document.querySelector('.gallery-scroll');
-    if (galleryScroll) {
-        galleryScroll.addEventListener('mouseenter', () => {
-            isPaused = true;
-        });
-
-        galleryScroll.addEventListener('mouseleave', () => {
-            isPaused = false;
-        });
-
-        // Touch support for mobile
-        galleryScroll.addEventListener('touchstart', () => {
-            isPaused = true;
-        });
-
-        galleryScroll.addEventListener('touchend', () => {
-            setTimeout(() => {
-                isPaused = false;
-            }, 2000); // Resume after 2 seconds
-        });
+        track.style.transform = `translateX(${scrollPos}px)`;
+        requestAnimationFrame(animate);
     }
 
-    // Pause when tab is not visible (performance optimization)
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            isPaused = true;
-        } else {
-            isPaused = false;
-        }
-    });
+    animate();
 }
 
 // Add CSS for fade-in animation
 const style = document.createElement('style');
 style.textContent = `
-    .fade-in {
+    .fade -in {
         opacity: 0;
         transform: translateY(20px);
         transition: opacity 0.6s ease, transform 0.6s ease;
     }
-    .fade-in.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    .gallery-track {
-        transition: none;
-    }
+        .fade -in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+    .gallery - track {
+    transition: none;
+}
 `;
 document.head.appendChild(style);
 
@@ -189,27 +141,27 @@ function init3DTilt() {
 
         // Apply 3D transform to frame
         frame.style.transform = `
-            rotateX(${tiltX}deg) 
-            rotateY(${tiltY}deg) 
-            translateZ(10px)
-        `;
+rotateX(${tiltX}deg)
+rotateY(${tiltY}deg)
+translateZ(10px)
+    `;
 
         // Move shine based on mouse position
         if (shine) {
             const shineX = 50 + mouseX * 30;
             const shineY = 50 + mouseY * 30;
             shine.style.background = `
-                linear-gradient(
-                    ${135 + mouseX * 20}deg,
-                    transparent 0%,
-                    transparent 35%,
-                    rgba(255, 255, 255, 0.08) 45%,
-                    rgba(255, 255, 255, 0.15) 50%,
-                    rgba(255, 255, 255, 0.08) 55%,
-                    transparent 65%,
-                    transparent 100%
+linear - gradient(
+    ${135 + mouseX * 20}deg,
+    transparent 0 %,
+    transparent 35 %,
+    rgba(255, 255, 255, 0.08) 45 %,
+    rgba(255, 255, 255, 0.15) 50 %,
+    rgba(255, 255, 255, 0.08) 55 %,
+    transparent 65 %,
+    transparent 100 %
                 )
-            `;
+    `;
         }
 
         // Parallax effect on badges
@@ -218,7 +170,7 @@ function init3DTilt() {
             const depth = 0.5 + (index * 0.2);
             const moveX = mouseX * maxMove * depth * direction;
             const moveY = mouseY * maxMove * depth;
-            badge.style.transform = `translateY(${-10 + moveY}px) translateX(${moveX}px)`;
+            badge.style.transform = `translateY(${- 10 + moveY}px) translateX(${moveX}px)`;
         });
     });
 
@@ -313,4 +265,30 @@ function initRotatingRoles() {
 
     // Rotate every 2.5 seconds
     setInterval(rotateRoles, 2500);
+}
+// ===== TIMELINE ANIMATION FUNCTION =====
+function initTimeline() {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    if (!timelineItems.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0, // Trigger as soon as 1px is visible
+        rootMargin: '0px 0px -20px 0px'
+    });
+
+    timelineItems.forEach(item => {
+        observer.observe(item);
+    });
+
+    // Force check on load
+    setTimeout(() => {
+        window.dispatchEvent(new Event('scroll'));
+    }, 100);
 }
